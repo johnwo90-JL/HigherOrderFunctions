@@ -3,55 +3,63 @@
 // ett eller flere parametere.
 
 
+
 // Filtering
 // Bruker en funksjon som argument til parameteret `predicate`
 // for å filtrere et array.
 
-// const array = [0,1,2,3,4,5,6,7,8,9];
+const array = [0,1,2,3,4,5,6,7,8,9];
 
-// const predicate = (value, index, array) => {
-//     console.log(`value: ${value}, index: ${index}, array: ${array}`);
-//     return value % 2 === 0;
-// };
+const predicate = (value, index, array) => {
+    console.log(`value: ${value}, index: ${index}, array: ${array}`);
+    return value % 2 === 0;
+};
  
-// const result = array.filter(predicate);
-// console.log(result);
+const filterResult = array.filter(predicate);
+console.log("Filter result:", filterResult);
 
 
 
 // Callbacks
+// En funksjon som tar en annen funksjon som et argument og
+// returnerer resultatet via denne funksjonen.
 
 // Callback example 1:
-// function sum(arr, callback) {
-//     let result = 0;
 
-//     for (const element of arr) {
-//         // console.log(callback(element));
-//         result += callback(element, result);
-//     }
+function sum(arr, callback) {
+    let result = 0;
 
-//     return result;
-// }
+    for (const element of arr) {
+        // console.log(callback(element));
+        result += callback(element, result);
+    }
 
-// const result = sum([1,2,3,4,5,6], (value, partialSum) => value+partialSum); 
-// console.log(result); 
+    return result;
+}
+
+const sumResult = sum([1,2,3,4,5,6], value => value); 
+console.log("Sum result:", sumResult); 
+
 
 // Callback example 2:
-// function httpRequest(request, cb) {
-//     const result = {status: 200};
-//     const error = -1;
+function httpRequest(url, cb) {
+    const result = {status: 200, url };
+    const error = -1;
     
-//     // ...
-//     cb(result, error);
-// }
+    // ... do whatever
 
-// httpRequest("nrk.no", (res, err) => {
-//     if (err !== -1) {
-//         throw new Error("No good!");
-//     }
+    cb(result, error);
+}
 
-//     console.log(res);
-// })
+httpRequest("nrk.no", (res, err) => {
+    if (err !== -1) {
+        throw new Error("No good!");
+    }
+
+    console.log("Callback result:", res);
+});
+
+
 
 // Sort
 // Bruker en funksjon som argument til parameteret `compareFn`
@@ -64,9 +72,11 @@ const sort = arr.sort((a, b) => {
     if (a < b) {
         return -1;
     }
+
     if (a > b) {
         return 1;
     }
+
     if (a === b) {
         return 0;
     }
